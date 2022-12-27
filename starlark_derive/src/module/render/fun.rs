@@ -40,12 +40,12 @@ impl StarFun {
         match &self.type_attribute {
             Some(x) => quote_spanned! {
             self.span()=>
-                std::option::Option::Some(starlark::const_frozen_string!(#x).to_frozen_value())
+                ::std::option::Option::Some(starlark::const_frozen_string!(#x).to_frozen_value())
             },
             None => {
                 quote_spanned! {
                     self.span()=>
-                    std::option::Option::None
+                    ::std::option::Option::None
                 }
             }
         }
@@ -267,7 +267,7 @@ pub(crate) fn render_fun(x: StarFun) -> syn::Result<TokenStream> {
             // https://github.com/rust-lang/rfcs/pull/2515
             // Until then we use this hack as a workaround.
             #[allow(dead_code)] // Function is not used when return type is specified explicitly.
-            fn return_type_starlark_type_repr() -> std::string::String {
+            fn return_type_starlark_type_repr() -> ::std::string::String {
                 fn get_impl<'v, T: starlark::values::AllocValue<'v>>(
                     _f: fn(
                         #this_param_type
@@ -275,7 +275,7 @@ pub(crate) fn render_fun(x: StarFun) -> syn::Result<TokenStream> {
                         #eval_param_type
                         #heap_param_type
                     ) -> anyhow::Result<T>,
-                ) -> std::string::String {
+                ) -> ::std::string::String {
                     <T as starlark::values::type_repr::StarlarkTypeRepr>::starlark_type_repr()
                 }
                 get_impl(Self::invoke_impl)
@@ -538,7 +538,7 @@ fn render_documentation(x: &StarFun) -> syn::Result<(Ident, TokenStream)> {
     let documentation = quote_spanned!(span=>
         let #var_name = {
             let signature = #documentation_signature;
-            let parameter_types = std::collections::HashMap::from([#(#parameter_types),*]);
+            let parameter_types = ::std::collections::HashMap::from([#(#parameter_types),*]);
             let return_type = Some(
                 starlark::docs::Type {
                     raw_type: #return_type_str

@@ -501,14 +501,16 @@ pub struct Freezer {
 }
 
 impl Freezer {
-    pub(crate) fn new(heap: FrozenHeap) -> Self {
+    #[ allow (missing_docs) ]
+    pub fn new(heap: FrozenHeap) -> Self {
         Freezer {
             heap,
             frozen_defs: RefCell::new(Vec::new()),
         }
     }
 
-    pub(crate) fn into_ref(self) -> FrozenHeapRef {
+    #[ allow (missing_docs) ]
+    pub fn into_ref(self) -> FrozenHeapRef {
         self.heap.into_ref()
     }
 

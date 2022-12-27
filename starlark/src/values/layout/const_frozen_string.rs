@@ -34,7 +34,7 @@ macro_rules! const_frozen_string {
             static X: $crate::values::StarlarkStrNRepr<N> =
                 $crate::values::StarlarkStrNRepr::new(if UNREACHABLE { "xx" } else { $s });
             if UNREACHABLE {
-                unreachable!()
+                ::std::unreachable!()
             } else {
                 X.erase()
             }

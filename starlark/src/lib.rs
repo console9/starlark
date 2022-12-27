@@ -433,3 +433,12 @@ pub mod __derive_refs {
     }
     pub use inventory;
 }
+
+#[doc(hidden)]
+pub mod __imports {
+    #[allow(pub_use_of_private_extern_crate)]
+    pub use ::gazebo;
+    #[allow(pub_use_of_private_extern_crate)]
+    pub use ::allocative;
+}
+
